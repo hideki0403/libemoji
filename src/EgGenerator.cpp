@@ -10,6 +10,7 @@
 #include "SkPaint.h"
 #include "SkSurface.h"
 #include "SkTypeface.h"
+#include "SkData.h"
 
 #include "EgGenerator.h"
 #include "EgLine.h"
