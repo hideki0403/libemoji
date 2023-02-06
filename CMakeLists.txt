@@ -4,11 +4,11 @@ project(emoji)
 
 # Common
 #~~~~~~~~~
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -DNDEBUG -march=native")
 set(CMAKE_CXX_STANDARD 17)
@@ -67,18 +67,19 @@ get_filename_component(gn_path externals/depot_tools/gn ABSOLUTE)
 get_filename_component(ninja_path externals/depot_tools/ninja ABSOLUTE)
 
 if(WIN32)
-set(SKIA_FILE "tmp/libskia.lib")
-set(SKIA_ARGS "\"is_debug=false target_cpu=\"\"x64\"\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false cc=\"\"clang\"\" cxx=\"\"clang++\"\" clang_win=\"\"%LLVM_PATH%\"\" win_vc=\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\"\" extra_cflags=[\"\"-MTd\"\"]\"")
+  set(SKIA_NAME "tmp/skia.lib")
+  set(SKIA_ARGS "\"is_debug=false target_cpu=\"\"x64\"\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false cc=\"\"clang\"\" cxx=\"\"clang++\"\" clang_win=\"\"%LLVM_PATH%\"\" win_vc=\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\"\" extra_cflags=[\"\"-MTd\"\"]\"")
+  set_source_files_properties(${SKIA_NAME} PROPERTIES SYMBOLIC 1)
 else()
-set(SKIA_FILE "tmp/libskia.a")
-set(SKIA_ARGS "'is_debug=false target_cpu=\"x64\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[\"-MTd\"]'")
+  set(SKIA_NAME "tmp/libskia.a")
+  set(SKIA_ARGS "'is_debug=false target_cpu=\"x64\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[\"-MTd\"]'")
 endif()
 
 add_custom_target(skia
-  SOURCES ${SKIA_FILE}
+  SOURCES ${SKIA_NAME}
 )
 add_custom_command(
-  OUTPUT ${SKIA_FILE}
+  OUTPUT ${SKIA_NAME}
   COMMAND python3 tools/git-sync-deps
   COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS}
   COMMAND ${ninja_path} -C out/Static
