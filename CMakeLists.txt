@@ -67,16 +67,18 @@ get_filename_component(gn_path externals/depot_tools/gn ABSOLUTE)
 get_filename_component(ninja_path externals/depot_tools/ninja ABSOLUTE)
 
 if(WIN32)
+set(SKIA_FILE "tmp/libskia.lib")
 set(SKIA_ARGS "\"is_debug=false target_cpu=\"\"x64\"\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false cc=\"\"clang\"\" cxx=\"\"clang++\"\" clang_win=\"\"%LLVM_PATH%\"\" win_vc=\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\"\" extra_cflags=[\"\"-MTd\"\"]\"")
 else()
+set(SKIA_FILE "tmp/libskia.a")
 set(SKIA_ARGS "'is_debug=false target_cpu=\"x64\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[\"-MTd\"]'")
 endif()
 
 add_custom_target(skia
-  SOURCES tmp/libskia.a
+  SOURCES ${SKIA_FILE}
 )
 add_custom_command(
-  OUTPUT tmp/libskia.a
+  OUTPUT ${SKIA_FILE}
   COMMAND python3 tools/git-sync-deps
   COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS}
   COMMAND ${ninja_path} -C out/Static
