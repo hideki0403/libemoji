@@ -74,9 +74,7 @@ add_custom_command(
   COMMAND python3 tools/git-sync-deps
   COMMAND ${gn_path} gen out/Static --args="is_debug=false target_cpu=""x64"" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[""-MTd""]"
   COMMAND ${ninja_path} -C out/Static
-  COMMAND ${CMAKE_COMMAND} -E copy
-    ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/libskia.a
-    ${CMAKE_SOURCE_DIR}/tmp/libskia.a
+  COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_SOURCE_DIR}/externals/skia/out/Static/libskia.a" "${CMAKE_SOURCE_DIR}/tmp/libskia.a"
   WORKING_DIRECTORY externals/skia
 )
 
