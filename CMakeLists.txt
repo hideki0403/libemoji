@@ -60,47 +60,6 @@ add_custom_command(
 )
 
 
-# example
-#~~~~~~~~~~
-file(GLOB example_files "example/*.c")
-add_executable(example
-  ${example_files}
-)
-add_dependencies(example emoji_combined)
-
-if(APPLE)
-  target_link_libraries(example
-    emoji
-    "-framework CoreFoundation"
-    "-framework CoreGraphics"
-    "-framework CoreText"
-    "-framework CoreServices"
-  )
-else()
-  set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-  find_package(Threads REQUIRED)
-  find_package(OpenGL REQUIRED)
-
-  find_package(PkgConfig)
-  pkg_check_modules(FONTCONFIG REQUIRED fontconfig)
-
-  include_directories(
-    ${FONTCONFIG_INCLUDE_DIRS}
-    ${OPENGL_INCLUDE_DIR}
-  )
-  link_directories(
-    ${FONTCONFIG_LIBRARY_DIRS}
-  )
-
-  target_link_libraries(example
-    emoji
-    ${OPENGL_LIBRARIES}
-    ${FONTCONFIG_LIBRARIES}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${CMAKE_DL_LIBS}
-  )
-endif()
-
 
 # Skia
 #~~~~~~~~
