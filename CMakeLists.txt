@@ -72,7 +72,7 @@ add_custom_target(skia
 add_custom_command(
   OUTPUT tmp/libskia.a
   COMMAND python3 tools/git-sync-deps
-  COMMAND ${gn_path} gen out/Static --args="is_debug=false target_cpu=""x64"" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_pdf_subset_harfbuzz=false extra_cflags=[""-w""]"
+  COMMAND ${gn_path} gen out/Static --args="is_debug=false target_cpu=""x64"" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_pdf_subset_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[""-w""]"
   COMMAND ${ninja_path} -C out/Static
   COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/libskia.a
