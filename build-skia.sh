@@ -15,6 +15,9 @@ fi
 echo build args: $args
 
 if [[ "$useTempDir" == "true" ]]; then
+  echo "export MSYS=winsymlinks:nativestrict" > ~/.bashrc
+  source ~/.bashrc
+
   echo "Create symbolic link"
   mkdir -p "C:/buildtmp"
   ln -s "C:/buildtmp" ./out
@@ -26,5 +29,5 @@ cat "C:/buildtmp/test.txt"
 python3 tools/git-sync-deps
 python3 ${gn_path} gen out/Static --args=$arg
 echo "Start skia build"
-python3 ${ninja_path} -C out/Static || (exit 0)
+python3 ${ninja_path} -C out/Static
 echo "Finished skia build"
