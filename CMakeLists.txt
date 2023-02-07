@@ -15,6 +15,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(LIBRARY_OUTPUT_DIRECTORY "lib")
 set(EXECUTABLE_OUTPUT_PATH "bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  "tmp")
 include_directories(
@@ -67,25 +68,25 @@ get_filename_component(gn_path externals/depot_tools/gn ABSOLUTE)
 get_filename_component(ninja_path externals/depot_tools/ninja ABSOLUTE)
 
 if(WIN32)
-  set(SKIA_NAME "tmp/skia.lib")
+  set(SKIA_NAME "skia.lib")
   set(SKIA_ARGS "\"is_debug=false target_cpu=\"\"x64\"\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false cc=\"\"clang\"\" cxx=\"\"clang++\"\" clang_win=\"\"%LLVM_PATH%\"\" win_vc=\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\"\" extra_cflags=[\"\"-MTd\"\"]\"")
   set_source_files_properties(${SKIA_NAME} PROPERTIES SYMBOLIC 1)
 else()
-  set(SKIA_NAME "tmp/libskia.a")
+  set(SKIA_NAME "libskia.a")
   set(SKIA_ARGS "'is_debug=false target_cpu=\"x64\" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=[\"-MTd\"]'")
 endif()
 
 add_custom_target(skia
-  SOURCES ${SKIA_NAME}
+  SOURCES tmp/${SKIA_NAME}
 )
 add_custom_command(
-  OUTPUT ${SKIA_NAME}
+  OUTPUT tmp/${SKIA_NAME}
   COMMAND python3 tools/git-sync-deps
   COMMAND echo "Start skia build"
   COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS}
   COMMAND ${ninja_path} -C out/Static
   COMMAND echo "Finished skia build"
-  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/externals/skia/out/Static" "${CMAKE_SOURCE_DIR}/tmp"
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/${SKIA_NAME} ${CMAKE_SOURCE_DIR}/tmp
   WORKING_DIRECTORY externals/skia
 )
 
