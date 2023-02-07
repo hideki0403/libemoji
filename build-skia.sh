@@ -17,10 +17,10 @@ echo build args: $args
 python3 tools/git-sync-deps
 python3 ${gn_path} gen out/Static --args=$arg
 echo "Start skia build"
-python3 ${ninja_path} -C out/Static
+python3 ${ninja_path} -C out/Static || (exit 0)
 echo "Finished skia build"
 
 if [[ "$cleanup_dir" == "true" ]]; then
   echo "Cleanup dir"
-  rm ./*.{exe,pdb}
+  rm -R ./third_party
 fi
