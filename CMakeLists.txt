@@ -78,7 +78,7 @@ add_custom_target(skia
 )
 add_custom_command(
   OUTPUT tmp/${SKIA_NAME}
-  COMMAND sh ${CMAKE_SOURCE_DIR}/build-skia.sh
+  COMMAND bash ${CMAKE_SOURCE_DIR}/build-skia.sh
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/${SKIA_NAME} ${CMAKE_SOURCE_DIR}/tmp
   WORKING_DIRECTORY externals/skia
 )
