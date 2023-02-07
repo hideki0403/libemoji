@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gn_path=$(dirname ${0})/externals/depot_tools/gn
-ninja_path=$(dirname ${0})externals/depot_tools/ninja
+ninja_path=$(dirname ${0})/externals/depot_tools/ninja
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   args='is_debug=false target_cpu="x64" is_official_build=true skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_icu=false skia_use_system_harfbuzz=false skia_use_system_expat=false skia_use_system_zlib=false extra_cflags=["-MTd"]'
@@ -12,7 +12,7 @@ fi
 echo build args: $args
 
 python3 tools/git-sync-deps
-$gn_path gen out/Static --args=$1
+$gn_path gen out/Static --args=$arg
 echo "Start skia build"
 ${ninja_path} -C out/Static
 echo "Finished skia build"
