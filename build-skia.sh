@@ -1,7 +1,8 @@
 #!/bin/bash
 
-gn_path=externals/depot_tools/gn
-ninja_path=externals/depot_tools/ninja
+gn_path=$(dirname ${0})/externals/depot_tools/gn
+ninja_path=$(dirname ${0})externals/depot_tools/ninja
+args=$(echo "$1" | sed -e 's/\\//g')
 
 echo build args: $1
 
