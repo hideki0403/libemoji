@@ -82,8 +82,8 @@ add_custom_target(skia
 add_custom_command(
   OUTPUT tmp/${SKIA_NAME}
   COMMAND python3 tools/git-sync-deps
-  COMMAND echo "Start skia build"
   COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS}
+  COMMAND echo "Start skia build"
   COMMAND ${ninja_path} -C out/Static
   COMMAND echo "Finished skia build"
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/${SKIA_NAME} ${CMAKE_SOURCE_DIR}/tmp
