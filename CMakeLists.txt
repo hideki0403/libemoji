@@ -82,7 +82,7 @@ add_custom_target(skia
 add_custom_command(
   OUTPUT tmp/${SKIA_NAME}
   COMMAND python3 tools/git-sync-deps
-  COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS}
+  COMMAND ${gn_path} gen out/Static --args=${SKIA_ARGS} || (exit 0)
   COMMAND echo "Start skia build"
   COMMAND ${ninja_path} -C out/Static
   COMMAND echo "Finished skia build"
