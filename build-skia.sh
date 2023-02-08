@@ -21,10 +21,9 @@ if [[ "$useTempDir" == "true" ]]; then
   echo "Create symbolic link"
   mkdir -p "C:/buildtmp"
   ln -s "C:/buildtmp" ./out
+  echo "successfully create symbolic link!" > ./out/test.txt
+  cat "C:/buildtmp/test.txt"
 fi
-
-echo "successfully create symbolic link!" > ./out/test.txt
-cat "C:/buildtmp/test.txt"
 
 python3 tools/git-sync-deps
 python3 ${gn_path} gen out/Static --args=$arg
