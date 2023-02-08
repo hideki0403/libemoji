@@ -4,17 +4,26 @@ project(emoji)
 
 # Common
 #~~~~~~~~~
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -MT")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg")
-set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -DNDEBUG -march=native")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(MSVC)
+  set(CMAKE_C_FLAGS_DEBUG "/MTd")
+  set(CMAKE_C_FLAGS_RELEASE "/MT")
+  set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+  set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+else()
+  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+  set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -pg")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O2 -s -DNDEBUG -march=native")
+endif()
+
+set(CMAKE_SUPPRESS_REGENERATION true)
 
 set(LIBRARY_OUTPUT_DIRECTORY "lib")
 set(EXECUTABLE_OUTPUT_PATH "bin")
