@@ -29,7 +29,7 @@ if [[ "$useTempDir" == "true" ]]; then
   mkdir -p "C:/buildtmp"
   mkdir -p "C:/skiatmp"
   ln -s "C:/buildtmp" ./out
-  ln -s "C:/skiatmp" ./externals/skia/out
+  ln -s "C:/skiatmp" $(dirname ${0})/externals/skia/out
   echo "successfully create symbolic link!" > ./out/test.txt
   cat "C:/buildtmp/test.txt"
 fi
