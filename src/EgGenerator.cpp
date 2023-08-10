@@ -5,15 +5,19 @@
 #include <utility>
 #include <vector>
 
-#include "SkCanvas.h"
-#include "SkImage.h"
-#include "SkPaint.h"
-#include "SkSurface.h"
-#include "SkTypeface.h"
-#include "SkData.h"
-
 #include "EgGenerator.h"
 #include "EgLine.h"
+#include "SkCanvas.h"
+#include "SkData.h"
+#include "SkStream.h"
+#include "SkImage.h"
+#include "SkImageInfo.h"
+#include "SkJpegEncoder.h"
+#include "SkPaint.h"
+#include "SkPngEncoder.h"
+#include "SkSurface.h"
+#include "SkTypeface.h"
+#include "SkWebpEncoder.h"
 
 EgGenerator::EgGenerator() {}
 
@@ -38,7 +42,7 @@ void EgGenerator::setText(const char *text) {
 }
 
 sk_sp<SkData> EgGenerator::generate() {
-    sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(fWidth, fHeight);
+    sk_sp<SkSurface> surface = SkSurfaces::Raster(SkImageInfo::MakeN32Premul(fWidth, fHeight));
     SkCanvas *canvas = surface->getCanvas();
     canvas->clear(fBackgroundColor);
 
@@ -87,7 +91,35 @@ sk_sp<SkData> EgGenerator::generate() {
 
     // エンコード
     sk_sp<SkImage> image(surface->makeImageSnapshot());
-    sk_sp<SkData> data(image->encodeToData(fFormat, fQuality));
+
+    // encode
+    SkPixmap pixmap;
+    image->peekPixels(&pixmap);
+    SkDynamicMemoryWStream stream;
+
+    switch (fFormat) {
+        case SkEncodedImageFormat::kPNG: {
+            struct SkPngEncoder::Options pngOptions;
+            SkPngEncoder::Encode(&stream, pixmap, pngOptions);
+            break;
+        }
+        case SkEncodedImageFormat::kJPEG: {
+            struct SkJpegEncoder::Options jpegOptions;
+            jpegOptions.fQuality = fQuality;
+            SkJpegEncoder::Encode(&stream, pixmap, jpegOptions);
+            break;
+        }
+        case SkEncodedImageFormat::kWEBP: {
+            struct SkWebpEncoder::Options webpOptions;
+            webpOptions.fQuality = fQuality;
+            SkWebpEncoder::Encode(&stream, pixmap, webpOptions);
+            break;
+        }
+        default:
+            break;
+    }
+
+    sk_sp<SkData> data(image->refEncodedData());
 
     return data;
 }
