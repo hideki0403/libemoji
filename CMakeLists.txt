@@ -40,6 +40,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/externals/skia/include/config
   ${CMAKE_SOURCE_DIR}/externals/skia/include/utils
   ${CMAKE_SOURCE_DIR}/externals/skia/include/gpu
+  ${CMAKE_SOURCE_DIR}/externals/skia/include/encode
 )
 link_directories(
   ${CMAKE_SOURCE_DIR}/tmp

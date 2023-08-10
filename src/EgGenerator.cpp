@@ -91,8 +91,6 @@ sk_sp<SkData> EgGenerator::generate() {
 
     // エンコード
     sk_sp<SkImage> image(surface->makeImageSnapshot());
-
-    // encode
     SkPixmap pixmap;
     image->peekPixels(&pixmap);
     SkDynamicMemoryWStream stream;
@@ -119,7 +117,7 @@ sk_sp<SkData> EgGenerator::generate() {
             break;
     }
 
-    sk_sp<SkData> data(image->refEncodedData());
+    sk_sp<SkData> data(stream.detachAsData());
 
     return data;
 }
