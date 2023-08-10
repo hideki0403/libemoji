@@ -21,18 +21,18 @@ fi
 
 echo build args: $args
 
-if [[ "$useTempDir" == "true" ]]; then
-  echo "export MSYS=winsymlinks:nativestrict" > ~/.bashrc
-  source ~/.bashrc
+# if [[ "$useTempDir" == "true" ]]; then
+#   echo "export MSYS=winsymlinks:nativestrict" > ~/.bashrc
+#   source ~/.bashrc
 
-  echo "Create symbolic link"
-  mkdir -p "C:/buildtmp"
-  mkdir -p "C:/skiatmp"
-  ln -s "C:/buildtmp" ./out
-  ln -s "C:/skiatmp" $(dirname ${0})/externals/skia/out
-  echo "successfully create symbolic link!" > ./out/test.txt
-  cat "C:/buildtmp/test.txt"
-fi
+#   echo "Create symbolic link"
+#   mkdir -p "C:/buildtmp"
+#   mkdir -p "C:/skiatmp"
+#   ln -s "C:/buildtmp" ./out
+#   ln -s "C:/skiatmp" $(dirname ${0})/externals/skia/out
+#   echo "successfully create symbolic link!" > ./out/test.txt
+#   cat "C:/buildtmp/test.txt"
+# fi
 
 python3 tools/git-sync-deps
 python3 ${gn_path} gen out/Static --args=$arg
