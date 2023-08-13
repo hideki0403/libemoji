@@ -82,6 +82,12 @@ add_custom_command(
 get_filename_component(gn_path externals/depot_tools/gn ABSOLUTE)
 get_filename_component(ninja_path externals/depot_tools/ninja ABSOLUTE)
 
+if(WIN32)
+  set(SKIA_NAME "skia.lib")
+else()
+  set(SKIA_NAME "libskia.a")
+endif()
+
 add_custom_target(skia
   SOURCES tmp/${SKIA_NAME}
 )
