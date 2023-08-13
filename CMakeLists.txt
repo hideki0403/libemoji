@@ -95,7 +95,6 @@ add_custom_command(
   OUTPUT tmp/${SKIA_NAME}
   COMMAND bash ${CMAKE_SOURCE_DIR}/build-skia.sh
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/${SKIA_NAME} ${CMAKE_SOURCE_DIR}/tmp
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_SOURCE_DIR}/externals/skia/out
   WORKING_DIRECTORY externals/skia
 )
 
