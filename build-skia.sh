@@ -10,10 +10,8 @@ ninja_path=$(dirname ${0})/externals/depot_tools/ninja.py
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   args='is_debug=false target_cpu="x64" is_official_build=false'
-  file_name=libskia.a
 else
   args="is_debug=false target_cpu=\"\"x64\"\" is_official_build=false cc=\"\"clang\"\" cxx=\"\"clang++\"\" clang_win=\"\"%LLVM_PATH%\"\" win_vc=\"\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\"\""
-  file_name=skia.lib
 fi
 
 echo build args: $args
@@ -24,4 +22,4 @@ echo "Start skia build"
 python3 ${ninja_path} -C out/Static
 echo "Finished skia build"
 
-cp "$(dirname ${0})/externals/skia/out/Static/$file_name" "$(dirname ${0})/tmp"
+cp "$(dirname ${0})/externals/skia/out/Static/*" "$(dirname ${0})/tmp"
