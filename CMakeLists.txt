@@ -82,19 +82,12 @@ add_custom_command(
 get_filename_component(gn_path externals/depot_tools/gn ABSOLUTE)
 get_filename_component(ninja_path externals/depot_tools/ninja ABSOLUTE)
 
-if(WIN32)
-  set(SKIA_NAME "skia.lib")
-else()
-  set(SKIA_NAME "libskia.a")
-endif()
-
 add_custom_target(skia
   SOURCES tmp/${SKIA_NAME}
 )
 add_custom_command(
   OUTPUT tmp/${SKIA_NAME}
   COMMAND bash ${CMAKE_SOURCE_DIR}/build-skia.sh
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/externals/skia/out/Static/${SKIA_NAME} ${CMAKE_SOURCE_DIR}/tmp
   WORKING_DIRECTORY externals/skia
 )
 
