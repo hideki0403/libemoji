@@ -22,4 +22,4 @@ echo "Start skia build"
 python3 ${ninja_path} -C out/Static
 echo "Finished skia build"
 
-cp $(dirname ${0})/externals/skia/out/Static/*.{a,lib} $(dirname ${0})/tmp
+cp $(dirname ${0})/externals/skia/out/Static/*.{a,lib} $(dirname ${0})/tmp || true
